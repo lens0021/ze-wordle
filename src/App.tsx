@@ -21,7 +21,7 @@ function App() {
   const [isWinModalOpen, setIsWinModalOpen] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
-  const [isNotEnoughLetters, _] = useState(false)
+  // const [isNotEnoughLetters, setIsNotEnoughLetters] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
   const [isWordNotFoundAlertOpen, setIsWordNotFoundAlertOpen] = useState(false)
   const [isGameLost, setIsGameLost] = useState(false)
@@ -153,7 +153,7 @@ function App() {
         이 게임에 대하여
       </button>
 
-      <Alert message="Not enough letters" isOpen={isNotEnoughLetters} />
+      {/* <Alert message="Not enough letters" isOpen={isNotEnoughLetters} /> */}
       <Alert message="Word not found" isOpen={isWordNotFoundAlertOpen} />
       <Alert
         message={`You lost, the word was ${solution}`}
