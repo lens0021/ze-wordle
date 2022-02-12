@@ -54,8 +54,7 @@ function App() {
   }, [isGameWon])
 
   const onChar = (value: string) => {
-    console.log(solution)
-    if (currentGuess.length < 13 && guesses.length < 14 && !isGameWon) {
+    if (currentGuess.length < 13 && guesses.length < 6 && !isGameWon) {
       setCurrentGuess(`${currentGuess}${value}`)
     }
   }
