@@ -11,7 +11,7 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
       <p className="text-sm text-gray-500">
         이 게임은 Wordle의 clone의 변형판의 변형판입니다 -{' '}
         <a
-          href="https://han-dle.github.io/pocketdle/"
+          href="https://han-dle.github.io/pocketmon/"
           className="underline font-bold"
         >
           코드는 여기에

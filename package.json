@@ -2,7 +2,7 @@
   "name": "wordle",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://han-dle.github.io/pocketdle/",
+  "homepage": "https://han-dle.github.io/pocketmon/",
   "dependencies": {
     "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
