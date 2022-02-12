@@ -46,6 +46,11 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
       <p className="text-sm text-gray-500">
         The letter ㅡ is not in the word in any spot.
       </p>
+
+      <p className="text-sm text-gray-500">
+        입력할 수 없는 포켓몬(폴리곤2, 폴리곤z)은 출제되지 않으며 니드런♀,
+        니드런♂, 타입:널은 특수문자를 뺀 '니드런'과 '타입널'로 취급됩니다.
+      </p>
     </BaseModal>
   )
 }
