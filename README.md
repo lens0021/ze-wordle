@@ -1,9 +1,10 @@
 # Pocketdle
 
-This is a clone project of the popular word guessing game we all know and love. Made using React, Typescript, and Tailwind.
+This is a clone project of the clone project of the popular word guessing game we all know and love.
 
 [**Try out the demo!**](https://han-dle.github.io/pocketmon/)
 
+<!--
 ## Build and run
 
 ### To Run Locally:
@@ -24,7 +25,7 @@ $> docker run -d -p 3000:3000 game
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in browser.
-<!--
+
 ## Projects built using this repo
 
 ### Other languages
