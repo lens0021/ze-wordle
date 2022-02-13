@@ -2,7 +2,7 @@
 
 This is a clone project of the clone project of the popular word guessing game we all know and love.
 
-[**Try out the demo!**](https://han-dle.github.io/pocketmon/)
+[**Try out the demo!**](https://pocketdle.vercel.app/)
 
 <!--
 ## Build and run
