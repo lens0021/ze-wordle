@@ -1,41 +1,14 @@
 import { solution } from './words'
 
 export const alphas = 'QWERTYUIOPASDFGHJKLZXCVBNM'.split('')
-export const krs = 'ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔㅁㄴㅇㄹㅎㅗㅓㅏㅣㅋㅌㅊㅍㅠㅜㅡ'.split('')
+export const krs = 'ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔㅁㄴㅇㄹㅎㅗㅓㅏㅣㅋㅌㅊㅍㅠㅜㅡ'.split(
+  ''
+)
 
-export const alpha_2_kr = Object.fromEntries(alphas.map((k,i) => [k,krs[i]]))
-export const kr_2_alpha = Object.fromEntries(krs.map((k,i) => [k,alphas[i]]))
-
+export const alpha_2_kr = Object.fromEntries(alphas.map((k, i) => [k, krs[i]]))
+export const kr_2_alpha = Object.fromEntries(krs.map((k, i) => [k, alphas[i]]))
 
 export type CharStatus = 'absent' | 'present' | 'correct'
-
-export type CharValue =
-  | 'Q'
-  | 'W'
-  | 'E'
-  | 'R'
-  | 'T'
-  | 'Y'
-  | 'U'
-  | 'I'
-  | 'O'
-  | 'P'
-  | 'A'
-  | 'S'
-  | 'D'
-  | 'F'
-  | 'G'
-  | 'H'
-  | 'J'
-  | 'K'
-  | 'L'
-  | 'Z'
-  | 'X'
-  | 'C'
-  | 'V'
-  | 'B'
-  | 'N'
-  | 'M'
 
 export const getStatuses = (
   guesses: string[]
@@ -108,4 +81,3 @@ export const getGuessStatuses = (guess: string): CharStatus[] => {
 
   return statuses
 }
-

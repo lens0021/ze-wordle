@@ -8,10 +8,10 @@ type Props = {
 export const AboutModal = ({ isOpen, handleClose }: Props) => {
   return (
     <BaseModal title="About" isOpen={isOpen} handleClose={handleClose}>
-      <p className="text-sm text-gray-500">
+      <p className="text-sm text-gray-500 dark:text-gray-300">
         이 게임은 Wordle의 clone의 변형판의 변형판입니다 -{' '}
         <a
-          href="https://han-dle.github.io/pocketmon/"
+          href="https://github.com/han-dle/pocketmon"
           className="underline font-bold"
         >
           코드는 여기에
