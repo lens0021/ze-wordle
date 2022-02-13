@@ -25,9 +25,7 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
         knownLetterSet.add(guess[i])
       }
       if (statuses[i] === 'correct' && word[i] !== guess[i]) {
-        return `어려움 모드에서는 ${guess[i]} 문자를 ${
-          i + 1
-        }번 자리에 사용하여야 합니다`
+        return `${guess[i]} 문자를 ${i + 1}번 자리에 사용하여야 합니다`
       }
     }
   }
@@ -35,7 +33,7 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
   for (const letter of Array.from(knownLetterSet.values())) {
     // fail fast, always return first failed letter if applicable
     if (!word.includes(letter)) {
-      return `Guess must contain ${letter}`
+      return `${letter} 문자가 포함되어야 합니다`
     }
   }
   return false
