@@ -25,7 +25,9 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
         knownLetterSet.add(guess[i])
       }
       if (statuses[i] === 'correct' && word[i] !== guess[i]) {
-        return `Must use ${guess[i]} in position ${i + 1}`
+        return `어려움 모드에서는 ${guess[i]} 문자를 ${
+          i + 1
+        }번 자리에 사용하여야 합니다`
       }
     }
   }

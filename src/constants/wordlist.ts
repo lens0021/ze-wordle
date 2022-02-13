@@ -153,8 +153,7 @@ export const WORDS = disassembledWords(
 눈여아
 늑골라
 늪짱이
-니드런♀
-니드런♂
+니드런
 니드리나
 니드리노
 니드퀸
@@ -788,7 +787,7 @@ export const WORDS = disassembledWords(
 킹크랩
 타격귀
 타만타
-타입:널
+타입널
 타타륜
 탄동
 탄차곤
@@ -866,8 +865,6 @@ export const WORDS = disassembledWords(
 폭음룡
 폭타
 폴리곤
-폴리곤2
-폴리곤z
 푸린
 푸크린
 푸푸린
