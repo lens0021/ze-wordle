@@ -26,7 +26,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell value="A" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        ㅣ은 정답 포켓몬 이름에 들어있었고 정확한 자리에 있습니다.
+        ㅍ은 정답 포켓몬 이름에 들어있었고 정확한 자리에 있습니다.
       </p>
 
       <div className="flex justify-center mb-1 mt-4">
@@ -35,7 +35,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell value="L" status="present" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        ㄹ은 정답 포켓몬 이름에 들어있지만 자리가 틀렸습니다.
+        ㅣ는 정답 포켓몬 이름에 들어있지만 자리가 틀렸습니다.
       </p>
 
       <div className="flex justify-center mb-1 mt-4">
@@ -46,7 +46,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell value="L" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        ㅡ는 포켓몬 이름에 들어있지 않았습니다.
+        ㅅ은 포켓몬 이름에 들어있지 않았습니다.
       </p>
       <p className="text-sm mt-4 text-gray-500">
         입력할 수 없는 포켓몬(폴리곤2, 폴리곤z)은 출제되지 않으며 '니드런♀',
