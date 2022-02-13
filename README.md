@@ -1,8 +1,8 @@
-# Pocketdle
+# Pockedle
 
 This is a clone project of the clone project of the popular word guessing game we all know and love.
 
-[**Try out the demo!**](https://pocketdle.vercel.app/)
+[**Try out the demo!**](https://pockedle.vercel.app/)
 
 <!--
 ## Build and run
