@@ -135,7 +135,7 @@ function App() {
 
   const onChar = (value: string) => {
     if (
-      currentGuess.length < MAX_WORD_LENGTH &&
+      // currentGuess.length < MAX_WORD_LENGTH &&
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
