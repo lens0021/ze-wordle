@@ -11,7 +11,7 @@ export const CORRECT_WORD_MESSAGE = (solution: string) => `정답은 ${solution}
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `${guess} 문자를 ${position}번 자리에 사용하여야 합니다`
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>
-`${letter} 문자가 포함되어야 합니다`
+  `${letter} 문자가 포함되어야 합니다`
 export const ENTER_TEXT = 'Enter'
 export const DELETE_TEXT = 'Delete'
 export const STATISTICS_TITLE = '통계'
