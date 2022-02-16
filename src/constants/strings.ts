@@ -2,11 +2,16 @@ export const GAME_TITLE = process.env.REACT_APP_GAME_NAME!
 
 export const WIN_MESSAGES = ['Great Job!', 'Awesome', 'Well done!']
 export const GAME_COPIED_MESSAGE = '결과가 복사되었습니다'
-export const ABOUT_GAME_MESSAGE = '이 게임에 대하여'
 // Unused in this variant
 export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'
 export const WORD_NOT_FOUND_MESSAGE = '포켓몬 이름이 아닙니다'
+export const HARD_MODE_ALERT_MESSAGE =
+  'Hard Mode can only be enabled at the start!'
 export const CORRECT_WORD_MESSAGE = (solution: string) => `정답은 ${solution}`
+export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
+  `${guess} 문자를 ${position}번 자리에 사용하여야 합니다`
+export const NOT_CONTAINED_MESSAGE = (letter: string) =>
+`${letter} 문자가 포함되어야 합니다`
 export const ENTER_TEXT = 'Enter'
 export const DELETE_TEXT = 'Delete'
 export const STATISTICS_TITLE = '통계'
