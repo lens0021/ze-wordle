@@ -2,14 +2,13 @@ export const GAME_TITLE = process.env.REACT_APP_GAME_NAME!
 
 export const WIN_MESSAGES = ['Great Job!', 'Awesome', 'Well done!']
 export const GAME_COPIED_MESSAGE = '결과가 복사되었습니다'
-// Unused in this variant
-export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'
+// export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'
 export const WORD_NOT_FOUND_MESSAGE = '포켓몬 이름이 아닙니다'
 export const HARD_MODE_ALERT_MESSAGE =
-  'Hard Mode can only be enabled at the start!'
+  '어려운 모드는 시작 전에만 설정할 수 있습니다'
 export const HARD_MODE_DESCRIPTION =
-  'Any revealed hints must be used in subsequent guesses'
-export const HIGH_CONTRAST_MODE_DESCRIPTION = 'For improved color vision'
+  '찾아낸 글자를 다음 추측에서 모두 사용하여야 합니다'
+export const HIGH_CONTRAST_MODE_DESCRIPTION = '잘 보이는 색을 씁니다'
 export const CORRECT_WORD_MESSAGE = (solution: string) => `정답은 ${solution}`
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `${guess} 문자를 ${position}번 자리에 사용하여야 합니다`
