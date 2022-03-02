@@ -90,7 +90,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         </a>
         의 변형판입니다 -{' '}
         <a
-          href="https://github.com/han-dle/pocketmon"
+          href={`https://github.com/${process.env.REACT_APP_VERCEL_GIT_REPO_OWNER}/${process.env.REACT_APP_VERCEL_GIT_REPO_SLUG}`}
           className="underline font-bold"
         >
           여기
