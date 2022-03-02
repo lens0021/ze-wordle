@@ -11,7 +11,7 @@ export const shareStatus = (
   isHighContrastMode: boolean
 ) => {
   navigator.clipboard.writeText(
-    `${GAME_TITLE} ${solutionIndex} ${
+    `${GAME_TITLE} ${solutionIndex} ${process.env.REACT_APP_VERCEL_URL} ${
       lost ? 'X' : guesses.length
     }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}\n\n` +
       generateEmojiGrid(guesses, getEmojiTiles(isDarkMode, isHighContrastMode))
