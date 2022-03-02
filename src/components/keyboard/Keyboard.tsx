@@ -1,4 +1,4 @@
-import { alpha_2_kr, getStatuses, krs } from '../../lib/statuses'
+import { alpha_2_kr, getStatuses } from '../../lib/statuses'
 import { Key } from './Key'
 import { useEffect } from 'react'
 import { ENTER_TEXT, DELETE_TEXT } from '../../constants/strings'
@@ -41,7 +41,6 @@ export const Keyboard = ({
         const _key = localeAwareUpperCase(e.key)
         const key = (alpha_2_kr[_key] && alpha_2_kr[_key]) || _key
         // TODO: check this test if the range works with non-english letters
-        console.log(key)
         if (key.length === 1 && key >= 'A' && key <= 'Z') {
           onChar(key)
         }

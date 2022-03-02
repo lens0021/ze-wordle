@@ -24,7 +24,7 @@ import {
   isWinningWord,
   solution,
   findFirstUnusedReveal,
-  unicodeLength,
+  // unicodeLength,
 } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
