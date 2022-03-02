@@ -7,6 +7,9 @@ export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'
 export const WORD_NOT_FOUND_MESSAGE = '포켓몬 이름이 아닙니다'
 export const HARD_MODE_ALERT_MESSAGE =
   'Hard Mode can only be enabled at the start!'
+export const HARD_MODE_DESCRIPTION =
+  'Any revealed hints must be used in subsequent guesses'
+export const HIGH_CONTRAST_MODE_DESCRIPTION = 'For improved color vision'
 export const CORRECT_WORD_MESSAGE = (solution: string) => `정답은 ${solution}`
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `${guess} 문자를 ${position}번 자리에 사용하여야 합니다`

@@ -1,4 +1,4 @@
-import { solution } from './words'
+import { solution, unicodeSplit } from './words'
 
 export const alphas = 'QWERTYUIOPASDFGHJKLZXCVBNM'.split('')
 export const krs = 'ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔㅁㄴㅇㄹㅎㅗㅓㅏㅣㅋㅌㅊㅍㅠㅜㅡ'.split(
@@ -14,16 +14,17 @@ export const getStatuses = (
   guesses: string[]
 ): { [key: string]: CharStatus } => {
   const charObj: { [key: string]: CharStatus } = {}
+  const splitSolution = unicodeSplit(solution)
 
   guesses.forEach((word) => {
-    word.split('').forEach((letter, i) => {
+    unicodeSplit(word).forEach((letter, i) => {
       const _letter = kr_2_alpha[letter]
-      if (!solution.includes(letter)) {
+      if (!splitSolution.includes(letter)) {
         // make status absent
         return (charObj[_letter] = 'absent')
       }
 
-      if (letter === solution[i]) {
+      if (letter === splitSolution[i]) {
         //make status correct
         return (charObj[_letter] = 'correct')
       }
@@ -39,8 +40,8 @@ export const getStatuses = (
 }
 
 export const getGuessStatuses = (guess: string): CharStatus[] => {
-  const splitSolution = solution.split('')
-  const splitGuess = guess.split('')
+  const splitSolution = unicodeSplit(solution)
+  const splitGuess = unicodeSplit(guess)
 
   const solutionCharsTaken = splitSolution.map((_) => false)
 
