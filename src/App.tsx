@@ -24,7 +24,7 @@ import {
   isWinningWord,
   solution,
   findFirstUnusedReveal,
-  // unicodeLength,
+  unicodeLength,
 } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
@@ -166,7 +166,7 @@ function App() {
 
   const onChar = (value: string) => {
     if (
-      // unicodeLength(`${currentGuess}${value}`) <= MAX_WORD_LENGTH &&
+      unicodeLength(`${currentGuess}${value}`) <= MAX_WORD_LENGTH &&
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
