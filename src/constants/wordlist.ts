@@ -6,8 +6,8 @@ const replaceMap: { [key: string]: string } = {
   ㅃ: 'ㅂㅂ',
   ㅆ: 'ㅅㅅ',
   ㅉ: 'ㅈㅈ',
-  ㅒ: 'ㅐㅐ',
-  ㅖ: 'ㅔㅔ',
+  ㅒ: 'ㅑㅣ',
+  ㅖ: 'ㅕㅣ',
 }
 
 export const disassembledWords = (words: string[]): string[] => {

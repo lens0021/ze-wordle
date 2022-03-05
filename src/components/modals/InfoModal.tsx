@@ -13,9 +13,6 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         6번의 시도 안에 포켓몬을 맞히세요. 정답을 입력할 때마다 각 타일의 색이
         바뀌어 제출한 답안이 얼마나 정답에 가까운지 보여줍니다.
       </p>
-      <p className="text-sm text-gray-500 dark:text-gray-300">
-        ㅖ는 ㅔㅔ와 같이 풀어 쓰고, ㅢ는 ㅡㅣ와 같이 풀어씁니다
-      </p>
 
       <div className="flex justify-center mb-1 mt-4">
         <Cell
@@ -57,6 +54,21 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         ㅅ은 포켓몬 이름에 들어있지 않았습니다.
+      </p>
+
+      <div className="flex justify-center mb-1 mt-4">
+        <Cell value="A" />
+        <Cell value="K" />
+        <Cell value="T" />
+        <Cell value="U" />
+        <Cell value="L" />
+        <Cell value="D" />
+        <Cell value="L" />
+        <Cell value="E" />
+        <Cell value="M" />
+      </div>
+      <p className="text-sm text-gray-500 dark:text-gray-300">
+        ㅖ는 ㅕㅣ와 같이 풀어씁니다.
       </p>
       <p className="text-sm mt-4 text-gray-500">
         입력할 수 없는 포켓몬(폴리곤2, 폴리곤z)은 출제되지 않으며 '니드런♀',
