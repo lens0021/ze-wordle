@@ -23,8 +23,9 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         />
         <Cell value="K" />
         <Cell value="S" />
-        <Cell value="M" />
-        <Cell value="F" />
+        <Cell />
+        <Cell />
+        <Cell />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         ㅎ은 정답에 들어있었고 정확한 자리에 있습니다.
@@ -41,6 +42,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         />
         <Cell value="R" />
         <Cell value="L" />
+        <Cell />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         ㄹ은 정답에 들어있지만 자리가 틀렸습니다.
@@ -52,6 +54,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell value="F" />
         <Cell isRevealing={true} isCompleted={true} value="M" status="absent" />
         <Cell value="A" />
+        <Cell />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         ㅡ는 정답에 들어있지 않았습니다.
@@ -66,7 +69,8 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell value="L" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        ㅔ는 ㅓㅣ, ㅖ는 ㅕㅣ와 같이 풀어씁니다.
+        ㅔ는 ㅓㅣ, ㅖ는 ㅕㅣ와 같이 풀어쓰며 글자수가 일치하지 않아도 제출
+        가능합니다.
       </p>
 
       {/*
