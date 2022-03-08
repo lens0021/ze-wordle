@@ -1,3 +1,3 @@
-const KoreanNounList = require('pd-korean-noun-list-for-wordles')
+import { ALL_NOUNS } from 'pd-korean-noun-list-for-wordles'
 
-export const VALID_GUESSES = KoreanNounList.ALL_NOUNS
+export const VALID_GUESSES = ALL_NOUNS

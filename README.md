@@ -1,8 +1,8 @@
-# Pockedle
+# Ze Wordle
 
 This is a clone project of the clone project of the popular word guessing game we all know and love.
 
-[**Try out the demo!**](https://pockedle.vercel.app/)
+[**Try out the demo!**](https://ze-wordle.pages.dev/)
 
 <!--
 ## Build and run
