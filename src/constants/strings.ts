@@ -3,7 +3,7 @@ export const GAME_TITLE = process.env.REACT_APP_GAME_NAME!
 export const WIN_MESSAGES = ['Great Job!', 'Awesome', 'Well done!']
 export const GAME_COPIED_MESSAGE = '결과가 복사되었습니다'
 // export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'
-export const WORD_NOT_FOUND_MESSAGE = '포켓몬 이름이 아닙니다'
+export const WORD_NOT_FOUND_MESSAGE = '단어를 찾을 수 없습니다'
 export const HARD_MODE_ALERT_MESSAGE =
   '어려운 모드는 시작 전에만 설정할 수 있습니다'
 export const HARD_MODE_DESCRIPTION =

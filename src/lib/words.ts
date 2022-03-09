@@ -1,13 +1,36 @@
 import { WORDS } from '../constants/wordlist'
-// import { VALID_GUESSES } from '../constants/validGuesses'
+import { VALID_GUESSES } from '../constants/validGuesses'
 import { WRONG_SPOT_MESSAGE, NOT_CONTAINED_MESSAGE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
+import { disassemble } from 'hangul-js'
+
+const replaceMap: { [key: string]: string } = {
+  ㄲ: 'ㄱㄱ',
+  ㄸ: 'ㄷㄷ',
+  ㅃ: 'ㅂㅂ',
+  ㅆ: 'ㅅㅅ',
+  ㅉ: 'ㅈㅈ',
+  ㅒ: 'ㅑㅣ',
+  ㅖ: 'ㅕㅣ',
+}
+
+export const disassembledWords = (words: string[]): string[] => {
+  return words.map((word) => {
+    word = disassemble(word).join('')
+    for (let replace in replaceMap) {
+      word = word.replace(replace, replaceMap[replace])
+    }
+    return word
+  })
+}
 
 export const isWordInWordList = (word: string) => {
   return (
-    WORDS.includes(localeAwareLowerCase(word)) || false
+    // WORDS.includes(localeAwareLowerCase(word)) ||
+    disassembledWords(WORDS).includes(localeAwareLowerCase(word)) ||
     // VALID_GUESSES.includes(localeAwareLowerCase(word))
+    disassembledWords(VALID_GUESSES).includes(localeAwareLowerCase(word))
   )
 }
 
@@ -73,15 +96,16 @@ export const localeAwareUpperCase = (text: string) => {
 }
 
 export const getWordOfDay = () => {
-  // February 13, 2022 Game Epoch
-  const epochMs = new Date('February 13, 2022 00:00:00').valueOf()
+  const epochMs = new Date('March 8, 2022 00:00:00').valueOf()
   const now = Date.now()
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay)
   const nextday = (index + 1) * msInDay + epochMs
+  const words = disassembledWords(WORDS)
 
   return {
-    solution: localeAwareUpperCase(WORDS[index % WORDS.length]),
+    // solution: localeAwareUpperCase(WORDS[index % WORDS.length]),
+    solution: localeAwareUpperCase(words[index % words.length]),
     solutionIndex: index,
     tomorrow: nextday,
   }

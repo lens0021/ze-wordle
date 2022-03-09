@@ -10,7 +10,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
   return (
     <BaseModal title="게임 방법" isOpen={isOpen} handleClose={handleClose}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        6번의 시도 안에 포켓몬을 맞히세요. 정답을 입력할 때마다 각 타일의 색이
+        6번의 시도 안에 정답을 맞히세요. 정답을 입력할 때마다 각 타일의 색이
         바뀌어 제출한 답안이 얼마나 정답에 가까운지 보여줍니다.
       </p>
 
@@ -18,61 +18,59 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell
           isRevealing={true}
           isCompleted={true}
-          value="V"
+          value="G"
           status="correct"
         />
-        <Cell value="O" />
+        <Cell value="K" />
         <Cell value="S" />
-        <Cell value="X" />
-        <Cell value="J" />
-        <Cell value="A" />
+        <Cell />
+        <Cell />
+        <Cell />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        ㅍ은 정답 포켓몬 이름에 들어있었고 정확한 자리에 있습니다.
-      </p>
-
-      <div className="flex justify-center mb-1 mt-4">
-        <Cell value="Q" />
-        <Cell value="Q" />
-        <Cell
-          isRevealing={true}
-          isCompleted={true}
-          value="L"
-          status="present"
-        />
-      </div>
-      <p className="text-sm text-gray-500 dark:text-gray-300">
-        ㅣ는 정답 포켓몬 이름에 들어있지만 자리가 틀렸습니다.
+        ㅎ은 정답에 들어있었고 정확한 자리에 있습니다.
       </p>
 
       <div className="flex justify-center mb-1 mt-4">
         <Cell value="V" />
         <Cell value="L" />
+        <Cell
+          isRevealing={true}
+          isCompleted={true}
+          value="F"
+          status="present"
+        />
         <Cell value="R" />
-        <Cell isRevealing={true} isCompleted={true} value="T" status="absent" />
         <Cell value="L" />
+        <Cell />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        ㅅ은 포켓몬 이름에 들어있지 않았습니다.
+        ㄹ은 정답에 들어있지만 자리가 틀렸습니다.
       </p>
 
       <div className="flex justify-center mb-1 mt-4">
+        <Cell value="Q" />
+        <Cell value="H" />
+        <Cell value="F" />
+        <Cell isRevealing={true} isCompleted={true} value="M" status="absent" />
         <Cell value="A" />
-        <Cell value="K" />
-        <Cell value="T" />
-        <Cell value="U" />
-        <Cell value="L" />
-        <Cell value="D" />
-        <Cell value="L" />
-        <Cell value="E" />
-        <Cell value="M" />
+        <Cell />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        ㅖ는 ㅕㅣ와 같이 풀어씁니다.
+        ㅡ는 정답에 들어있지 않았습니다.
       </p>
-      <p className="text-sm mt-4 text-gray-500">
-        입력할 수 없는 포켓몬(폴리곤2, 폴리곤z)은 출제되지 않으며 '니드런♀',
-        '니드런♂', '타입:널'은 특수문자를 뺀 '니드런'과 '타입널'로 취급됩니다.
+
+      <div className="flex justify-center mb-1 mt-4">
+        <Cell value="T" />
+        <Cell value="J" />
+        <Cell value="L" />
+        <Cell value="R" />
+        <Cell value="U" />
+        <Cell value="L" />
+      </div>
+      <p className="text-sm text-gray-500 dark:text-gray-300">
+        ㅔ는 ㅓㅣ, ㅖ는 ㅕㅣ와 같이 풀어쓰며 글자수가 일치하지 않아도 제출
+        가능합니다.
       </p>
 
       {/*
@@ -102,7 +100,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         </a>
         의 변형판입니다 -{' '}
         <a
-          href={`https://github.com/${process.env.REACT_APP_VERCEL_GIT_REPO_OWNER}/${process.env.REACT_APP_VERCEL_GIT_REPO_SLUG}`}
+          href={`https://github.com/lens0021/ze-wordle`}
           className="underline font-bold"
         >
           여기
