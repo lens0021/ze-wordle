@@ -101,7 +101,7 @@ export const getWordOfDay = () => {
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay)
   const nextday = (index + 1) * msInDay + epochMs
-  const words = disassembledWords(WORDS)
+  const words = disassembledWords(WORDS).filter((w) => w.length === 5)
 
   return {
     // solution: localeAwareUpperCase(WORDS[index % WORDS.length]),

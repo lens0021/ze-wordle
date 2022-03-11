@@ -13,7 +13,7 @@ import {
   HARD_MODE_ALERT_MESSAGE,
 } from './constants/strings'
 import {
-  MAX_WORD_LENGTH,
+  // MAX_WORD_LENGTH,
   MAX_CHALLENGES,
   REVEAL_TIME_MS,
   GAME_LOST_INFO_DELAY,
@@ -25,6 +25,7 @@ import {
   solution,
   findFirstUnusedReveal,
   unicodeLength,
+  disassembledWords,
 } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
@@ -32,8 +33,11 @@ import {
   saveGameStateToLocalStorage,
   setStoredIsHighContrastMode,
   getStoredIsHighContrastMode,
+  loadThemedWordsFromLocalStorage,
+  saveThemedWordsToLocalStorage,
 } from './lib/localStorage'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
+import { theme } from './lib/theme'
 
 import './App.css'
 import { AlertContainer } from './components/alerts/AlertContainer'
@@ -94,6 +98,13 @@ function App() {
       : false
   )
 
+  const [themedWords, setThemedWords] = useState<string[]>(
+    loadThemedWordsFromLocalStorage(theme)
+  )
+  const MAX_WORD_LENGTH = theme
+    ? Math.max(...themedWords.map((w) => w.length))
+    : 5
+
   useEffect(() => {
     // if no game state on load,
     // show the user the how-to info modal
@@ -117,6 +128,39 @@ function App() {
       document.documentElement.classList.remove('high-contrast')
     }
   }, [isDarkMode, isHighContrastMode])
+
+  useEffect(() => {
+    // Fetch themed words
+
+    if (theme && themedWords.length === 0) {
+      const fetchData = async () => {
+        await fetch(
+          `https://wordles.miraheze.org/w/index.php?title=https://ze-wordle.pages.dev/${theme}/data.js&action=raw&/w/img_auth.php/.gif`
+        )
+          .then((res) => {
+            if (res.status === 404) {
+              throw new Error()
+            }
+            return res
+          })
+          .then((res) => res.text())
+          .then((res) => {
+            const words = disassembledWords(
+              res.replace(/^\/\*\n|\n\*\/$/g, '').split('\n')
+            )
+            saveThemedWordsToLocalStorage(words, theme)
+            setThemedWords(words)
+          })
+          .catch((_err) => {
+            showErrorAlert(`"${theme}" 테마를 찾지 못했습니다`, {
+              persist: true,
+            })
+          })
+      }
+
+      fetchData()
+    }
+  })
 
   const handleDarkMode = (isDark: boolean) => {
     setIsDarkMode(isDark)
@@ -162,7 +206,7 @@ function App() {
         setIsStatsModalOpen(true)
       }, GAME_LOST_INFO_DELAY)
     }
-  }, [isGameWon, isGameLost, showSuccessAlert])
+  }, [isGameWon, isGameLost, showSuccessAlert, MAX_WORD_LENGTH])
 
   const onChar = (value: string) => {
     if (
@@ -245,6 +289,15 @@ function App() {
     }
   }
 
+  if (theme && themedWords.length === 0) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <div className="text-xl">불러오는 중...</div>
+        <AlertContainer />
+      </div>
+    )
+  }
+
   return (
     <div className="h-screen flex flex-col">
       <Navbar
@@ -259,6 +312,7 @@ function App() {
             currentGuess={currentGuess}
             isRevealing={isRevealing}
             currentRowClassName={currentRowClass}
+            maxWordLength={MAX_WORD_LENGTH}
           />
         </div>
         <Keyboard
@@ -267,6 +321,7 @@ function App() {
           onEnter={onEnter}
           guesses={guesses}
           isRevealing={isRevealing}
+          maxWordLength={MAX_WORD_LENGTH}
         />
         <InfoModal
           isOpen={isInfoModalOpen}
