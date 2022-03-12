@@ -1,5 +1,6 @@
 const gameStateKey = 'gameState'
 const highContrastKey = 'highContrast'
+const themedNameKey = 'themedName'
 const themedWordsKey = 'themedWords'
 
 type StoredGameState = {
@@ -7,12 +8,15 @@ type StoredGameState = {
   solution: string
 }
 
-export const saveGameStateToLocalStorage = (gameState: StoredGameState) => {
-  localStorage.setItem(gameStateKey, JSON.stringify(gameState))
+export const saveGameStateToLocalStorage = (
+  gameState: StoredGameState,
+  theme: string
+) => {
+  localStorage.setItem(theme + '_' + gameStateKey, JSON.stringify(gameState))
 }
 
-export const loadGameStateFromLocalStorage = () => {
-  const state = localStorage.getItem(gameStateKey)
+export const loadGameStateFromLocalStorage = (theme: string) => {
+  const state = localStorage.getItem(theme + '_' + gameStateKey)
   return state ? (JSON.parse(state) as StoredGameState) : null
 }
 
@@ -27,12 +31,15 @@ export type GameStats = {
   successRate: number
 }
 
-export const saveStatsToLocalStorage = (gameStats: GameStats) => {
-  localStorage.setItem(gameStatKey, JSON.stringify(gameStats))
+export const saveStatsToLocalStorage = (
+  gameStats: GameStats,
+  theme: string
+) => {
+  localStorage.setItem(theme + '_' + gameStatKey, JSON.stringify(gameStats))
 }
 
-export const loadStatsFromLocalStorage = () => {
-  const stats = localStorage.getItem(gameStatKey)
+export const loadStatsFromLocalStorage = (theme: string) => {
+  const stats = localStorage.getItem(theme + '_' + gameStatKey)
   return stats ? (JSON.parse(stats) as GameStats) : null
 }
 
@@ -49,14 +56,26 @@ export const getStoredIsHighContrastMode = () => {
   return highContrast === '1'
 }
 
-export const saveThemedWordsToLocalStorage = (
-  themedWords: string[],
-  prefix: string
+export const saveThemedNameToLocalStorage = (
+  themedName: string,
+  theme: string
 ) => {
-  localStorage.setItem(prefix + '_' + themedWordsKey, themedWords.join('\n'))
+  localStorage.setItem(theme + '_' + themedNameKey, themedName)
 }
 
-export const loadThemedWordsFromLocalStorage = (prefix: string) => {
-  const state = localStorage.getItem(prefix + '_' + themedWordsKey)
+export const loadThemedNameFromLocalStorage = (theme: string) => {
+  const state = localStorage.getItem(theme + '_' + themedNameKey)
+  return state ? state : ''
+}
+
+export const saveThemedWordsToLocalStorage = (
+  themedWords: string[],
+  theme: string
+) => {
+  localStorage.setItem(theme + '_' + themedWordsKey, themedWords.join('\n'))
+}
+
+export const loadThemedWordsFromLocalStorage = (theme: string) => {
+  const state = localStorage.getItem(theme + '_' + themedWordsKey)
   return state ? state.split('\n') : []
 }

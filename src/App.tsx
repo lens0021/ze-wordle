@@ -33,6 +33,8 @@ import {
   saveGameStateToLocalStorage,
   setStoredIsHighContrastMode,
   getStoredIsHighContrastMode,
+  loadThemedNameFromLocalStorage,
+  saveThemedNameToLocalStorage,
   loadThemedWordsFromLocalStorage,
   saveThemedWordsToLocalStorage,
 } from './lib/localStorage'
@@ -73,7 +75,7 @@ function App() {
   )
   const [isRevealing, setIsRevealing] = useState(false)
   const [guesses, setGuesses] = useState<string[]>(() => {
-    const loaded = loadGameStateFromLocalStorage()
+    const loaded = loadGameStateFromLocalStorage(theme)
     if (loaded?.solution !== solution) {
       return []
     }
@@ -98,6 +100,9 @@ function App() {
       : false
   )
 
+  const [themedName, setThemedName] = useState<string>(
+    loadThemedNameFromLocalStorage(theme)
+  )
   const [themedWords, setThemedWords] = useState<string[]>(
     loadThemedWordsFromLocalStorage(theme)
   )
@@ -108,7 +113,7 @@ function App() {
   useEffect(() => {
     // if no game state on load,
     // show the user the how-to info modal
-    if (!loadGameStateFromLocalStorage()) {
+    if (!loadGameStateFromLocalStorage(theme)) {
       setTimeout(() => {
         setIsInfoModalOpen(true)
       }, WELCOME_INFO_MODAL_MS)
@@ -130,26 +135,36 @@ function App() {
   }, [isDarkMode, isHighContrastMode])
 
   useEffect(() => {
-    // Fetch themed words
+    // Fetch theme
 
     if (theme && themedWords.length === 0) {
       const fetchData = async () => {
         await fetch(
-          `https://wordles.miraheze.org/w/index.php?title=https://ze-wordle.pages.dev/${theme}/data.js&action=raw&/w/img_auth.php/.gif`
+          `https://api.allorigins.win/get?url=${encodeURIComponent(
+            `https://wordles.miraheze.org/wiki/https://ze-wordle.pages.dev/${theme}/data?action=raw`
+          )}`
         )
           .then((res) => {
-            if (res.status === 404) {
+            if (res.ok) return res.json()
+            throw new Error()
+          })
+          .then((data) => {
+            const contents = data.contents
+            if (!contents.length) {
               throw new Error()
             }
-            return res
-          })
-          .then((res) => res.text())
-          .then((res) => {
-            const words = disassembledWords(
-              res.replace(/^\/\*\n|\n\*\/$/g, '').split('\n')
-            )
-            saveThemedWordsToLocalStorage(words, theme)
-            setThemedWords(words)
+            let m = contents.match(/\|name\s*=\s*([^|}]+)/)
+            if (m && m[1]) {
+              const name = m[1].trim()
+              setThemedName(name)
+              saveThemedNameToLocalStorage(name, theme)
+            }
+            m = contents.match(/\|words\s*=\s*([^|}]+)/)
+            if (m && m[1]) {
+              const words = disassembledWords(m[1].trim().split('\n'))
+              setThemedWords(words)
+              saveThemedWordsToLocalStorage(words, theme)
+            }
           })
           .catch((_err) => {
             showErrorAlert(`"${theme}" 테마를 찾지 못했습니다`, {
@@ -186,7 +201,7 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution })
+    saveGameStateToLocalStorage({ guesses, solution }, theme)
   }, [guesses])
 
   useEffect(() => {
@@ -304,6 +319,7 @@ function App() {
         setIsInfoModalOpen={setIsInfoModalOpen}
         setIsStatsModalOpen={setIsStatsModalOpen}
         setIsSettingsModalOpen={setIsSettingsModalOpen}
+        themedName={themedName}
       />
       <div className="pt-2 px-1 pb-8 md:max-w-4xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow">
         <div className="pb-6 grow">

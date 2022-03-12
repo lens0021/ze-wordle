@@ -4,6 +4,8 @@ import {
   HARD_MODE_DESCRIPTION,
   HIGH_CONTRAST_MODE_DESCRIPTION,
 } from '../../constants/strings'
+import { saveThemedWordsToLocalStorage } from '../../lib/localStorage'
+import { theme } from '../../lib/theme'
 
 type Props = {
   isOpen: boolean
@@ -46,6 +48,16 @@ export const SettingsModal = ({
           handleFlag={handleHighContrastMode}
           description={HIGH_CONTRAST_MODE_DESCRIPTION}
         />
+        <button
+          type="button"
+          className="mt-2 w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+          onClick={() => {
+            saveThemedWordsToLocalStorage([], theme)
+            window.location.reload()
+          }}
+        >
+          단어 데이터베이스 새로고침
+        </button>
       </div>
     </BaseModal>
   )
