@@ -73,6 +73,15 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         가능합니다.
       </p>
 
+      <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
+        <a
+          href={`https://wordles.miraheze.org/wiki/Form:Ze_Wordle`}
+          className="underline font-bold"
+        >
+          내가 원하는 주제로 새 Ze-Wordle 만들기
+        </a>
+      </p>
+
       {/*
       <p className="mt-6 italic text-sm text-gray-500 dark:text-gray-300">
         This is an open source version of the word guessing game we all know and
@@ -114,10 +123,10 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
 
       <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
         <a
-          href={`https://wordles.miraheze.org/wiki/Form:Ze_Wordle`}
+          href={`https://meta.miraheze.org/wiki/Special:MyLanguage/Donate`}
           className="underline font-bold"
         >
-          나만의 Ze-Wordle을 만들 수 있습니다
+          Miraheze에 기부
         </a>
       </p>
     </BaseModal>
