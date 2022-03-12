@@ -2,6 +2,7 @@ import { getGuessStatuses } from './statuses'
 import { solutionIndex } from './words'
 import { GAME_TITLE } from '../constants/strings'
 import { MAX_CHALLENGES } from '../constants/settings'
+import { loadThemedTitleFromLocalStorage } from './localStorage'
 
 export const shareStatus = (
   guesses: string[],
@@ -10,8 +11,9 @@ export const shareStatus = (
   isDarkMode: boolean,
   isHighContrastMode: boolean
 ) => {
+  const gameTitle = loadThemedTitleFromLocalStorage() || GAME_TITLE
   navigator.clipboard.writeText(
-    `${GAME_TITLE} ${solutionIndex} ${
+    `${gameTitle} ${solutionIndex} ${
       lost ? 'X' : guesses.length
     }/${MAX_CHALLENGES}${isHardMode ? '*' : ''} ${window.location.href} \n\n` +
       generateEmojiGrid(guesses, getEmojiTiles(isDarkMode, isHighContrastMode))

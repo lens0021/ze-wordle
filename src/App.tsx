@@ -13,7 +13,7 @@ import {
   HARD_MODE_ALERT_MESSAGE,
 } from './constants/strings'
 import {
-  MAX_WORD_LENGTH,
+  // MAX_WORD_LENGTH,
   MAX_CHALLENGES,
   REVEAL_TIME_MS,
   GAME_LOST_INFO_DELAY,
@@ -25,6 +25,7 @@ import {
   solution,
   findFirstUnusedReveal,
   unicodeLength,
+  disassembledWords,
 } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
@@ -32,8 +33,15 @@ import {
   saveGameStateToLocalStorage,
   setStoredIsHighContrastMode,
   getStoredIsHighContrastMode,
+  loadThemedTitleFromLocalStorage,
+  saveThemedTitleToLocalStorage,
+  loadThemedDateFromLocalStorage,
+  saveThemedDateToLocalStorage,
+  loadThemedWordsFromLocalStorage,
+  saveThemedWordsToLocalStorage,
 } from './lib/localStorage'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
+import { theme } from './lib/theme'
 
 import './App.css'
 import { AlertContainer } from './components/alerts/AlertContainer'
@@ -73,13 +81,13 @@ function App() {
     if (loaded?.solution !== solution) {
       return []
     }
-    const gameWasWon = loaded.guesses.includes(solution)
+    const gameWasWon = solution && loaded.guesses.includes(solution)
     if (gameWasWon) {
       setIsGameWon(true)
     }
     if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
       setIsGameLost(true)
-      showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
+      showErrorAlert(CORRECT_WORD_MESSAGE(solution || ''), {
         persist: true,
       })
     }
@@ -93,6 +101,17 @@ function App() {
       ? localStorage.getItem('gameMode') === 'hard'
       : false
   )
+
+  const [themedTitle, setThemedTitle] = useState<string>(
+    loadThemedTitleFromLocalStorage()
+  )
+  const [, setThemedDate] = useState<string>(loadThemedDateFromLocalStorage())
+  const [themedWords, setThemedWords] = useState<string[]>(
+    loadThemedWordsFromLocalStorage()
+  )
+  const MAX_WORD_LENGTH = theme
+    ? Math.max(...themedWords.map((w) => w.length))
+    : 5
 
   useEffect(() => {
     // if no game state on load,
@@ -118,6 +137,56 @@ function App() {
     }
   }, [isDarkMode, isHighContrastMode])
 
+  useEffect(() => {
+    // Fetch theme
+
+    if (theme && themedWords.length === 0) {
+      const fetchData = async () => {
+        await fetch(
+          `https://api.allorigins.win/get?url=${encodeURIComponent(
+            `https://wordles.miraheze.org/wiki/https://ze-wordle.pages.dev/${theme}?action=raw`
+          )}`
+        )
+          .then((res) => {
+            if (res.ok) return res.json()
+            throw new Error()
+          })
+          .then((data) => {
+            const contents = data.contents
+            if (!contents.length) {
+              throw new Error()
+            }
+            let m = contents.match(/\|name\s*=\s*([^|}]+)/)
+            if (m && m[1]) {
+              const name = m[1].trim()
+              setThemedTitle(name)
+              saveThemedTitleToLocalStorage(name)
+            }
+            m = contents.match(/\|date\s*=\s*([^|}]+)/)
+            if (m && m[1]) {
+              const date = m[1].trim()
+              setThemedDate(date)
+              saveThemedDateToLocalStorage(date)
+            }
+            m = contents.match(/\|words\s*=\s*([^|}]+)/)
+            if (m && m[1]) {
+              const words = disassembledWords(m[1].trim().split('\n'))
+              setThemedWords(words)
+              saveThemedWordsToLocalStorage(words)
+            }
+            window.location.reload()
+          })
+          .catch((_err) => {
+            showErrorAlert(`"${theme}" 테마를 찾지 못했습니다`, {
+              persist: true,
+            })
+          })
+      }
+
+      fetchData()
+    }
+  })
+
   const handleDarkMode = (isDark: boolean) => {
     setIsDarkMode(isDark)
     localStorage.setItem('theme', isDark ? 'dark' : 'light')
@@ -142,7 +211,9 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution })
+    if (solution.length) {
+      saveGameStateToLocalStorage({ guesses, solution })
+    }
   }, [guesses])
 
   useEffect(() => {
@@ -162,7 +233,7 @@ function App() {
         setIsStatsModalOpen(true)
       }, GAME_LOST_INFO_DELAY)
     }
-  }, [isGameWon, isGameLost, showSuccessAlert])
+  }, [isGameWon, isGameLost, showSuccessAlert, MAX_WORD_LENGTH])
 
   const onChar = (value: string) => {
     if (
@@ -245,12 +316,22 @@ function App() {
     }
   }
 
+  if (theme && (!themedWords.length || !solution.length)) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <div className="text-xl">불러오는 중...</div>
+        <AlertContainer />
+      </div>
+    )
+  }
+
   return (
     <div className="h-screen flex flex-col">
       <Navbar
         setIsInfoModalOpen={setIsInfoModalOpen}
         setIsStatsModalOpen={setIsStatsModalOpen}
         setIsSettingsModalOpen={setIsSettingsModalOpen}
+        themedTitle={themedTitle}
       />
       <div className="pt-2 px-1 pb-8 md:max-w-4xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow">
         <div className="pb-6 grow">
@@ -259,6 +340,7 @@ function App() {
             currentGuess={currentGuess}
             isRevealing={isRevealing}
             currentRowClassName={currentRowClass}
+            maxWordLength={MAX_WORD_LENGTH}
           />
         </div>
         <Keyboard
@@ -267,6 +349,7 @@ function App() {
           onEnter={onEnter}
           guesses={guesses}
           isRevealing={isRevealing}
+          maxWordLength={MAX_WORD_LENGTH}
         />
         <InfoModal
           isOpen={isInfoModalOpen}

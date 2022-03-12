@@ -111,6 +111,15 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         </a>
         에서 더 많은 한국어 워들을 찾을 수 있습니다
       </p>
+
+      <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
+        <a
+          href={`https://wordles.miraheze.org/wiki/Form:Ze_Wordle`}
+          className="underline font-bold"
+        >
+          나만의 Ze-Wordle을 만들 수 있습니다
+        </a>
+      </p>
     </BaseModal>
   )
 }

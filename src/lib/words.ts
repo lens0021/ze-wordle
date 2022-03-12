@@ -4,6 +4,11 @@ import { WRONG_SPOT_MESSAGE, NOT_CONTAINED_MESSAGE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 import { disassemble } from 'hangul-js'
+import {
+  loadThemedWordsFromLocalStorage,
+  loadThemedDateFromLocalStorage,
+} from './localStorage'
+import { theme } from './theme'
 
 const replaceMap: { [key: string]: string } = {
   ㄲ: 'ㄱㄱ',
@@ -26,9 +31,10 @@ export const disassembledWords = (words: string[]): string[] => {
 }
 
 export const isWordInWordList = (word: string) => {
+  const words = theme ? loadThemedWordsFromLocalStorage() : WORDS
   return (
     // WORDS.includes(localeAwareLowerCase(word)) ||
-    disassembledWords(WORDS).includes(localeAwareLowerCase(word)) ||
+    disassembledWords(words).includes(localeAwareLowerCase(word)) ||
     // VALID_GUESSES.includes(localeAwareLowerCase(word))
     disassembledWords(VALID_GUESSES).includes(localeAwareLowerCase(word))
   )
@@ -96,16 +102,20 @@ export const localeAwareUpperCase = (text: string) => {
 }
 
 export const getWordOfDay = () => {
-  const epochMs = new Date('March 8, 2022 00:00:00').valueOf()
+  const epochMs = new Date(
+    theme ? loadThemedDateFromLocalStorage() : 'March 8, 2022 00:00:00'
+  ).valueOf()
   const now = Date.now()
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay)
   const nextday = (index + 1) * msInDay + epochMs
-  const words = disassembledWords(WORDS)
+  const themedWords = theme ? loadThemedWordsFromLocalStorage() : WORDS
+  const words = disassembledWords(themedWords)
 
   return {
-    // solution: localeAwareUpperCase(WORDS[index % WORDS.length]),
-    solution: localeAwareUpperCase(words[index % words.length]),
+    solution: words.length
+      ? localeAwareUpperCase(words[index % words.length])
+      : '',
     solutionIndex: index,
     tomorrow: nextday,
   }

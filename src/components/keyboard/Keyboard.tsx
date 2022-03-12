@@ -10,6 +10,7 @@ type Props = {
   onEnter: () => void
   guesses: string[]
   isRevealing?: boolean
+  maxWordLength: number
 }
 
 export const Keyboard = ({
@@ -18,6 +19,7 @@ export const Keyboard = ({
   onEnter,
   guesses,
   isRevealing,
+  maxWordLength,
 }: Props) => {
   const charStatuses = getStatuses(guesses)
 
@@ -65,6 +67,7 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            maxWordLength={maxWordLength}
           />
         ))}
       </div>
@@ -76,11 +79,17 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            maxWordLength={maxWordLength}
           />
         ))}
       </div>
       <div className="flex justify-center">
-        <Key width={65.4} value="ENTER" onClick={onClick}>
+        <Key
+          width={65.4}
+          value="ENTER"
+          onClick={onClick}
+          maxWordLength={maxWordLength}
+        >
           {ENTER_TEXT}
         </Key>
         {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((key) => (
@@ -90,9 +99,15 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            maxWordLength={maxWordLength}
           />
         ))}
-        <Key width={65.4} value="DELETE" onClick={onClick}>
+        <Key
+          width={65.4}
+          value="DELETE"
+          onClick={onClick}
+          maxWordLength={maxWordLength}
+        >
           {DELETE_TEXT}
         </Key>
       </div>
