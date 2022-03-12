@@ -110,12 +110,7 @@ export const getWordOfDay = () => {
   const index = Math.floor((now - epochMs) / msInDay)
   const nextday = (index + 1) * msInDay + epochMs
   const themedWords = theme ? loadThemedWordsFromLocalStorage() : WORDS
-  const maxWordLength = themedWords.length
-    ? Math.max(...themedWords.map((w) => w.length))
-    : 5
-  const words = disassembledWords(themedWords).filter(
-    (w) => w.length === maxWordLength
-  )
+  const words = disassembledWords(themedWords)
 
   return {
     solution: words.length
