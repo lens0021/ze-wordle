@@ -25,7 +25,6 @@ import {
   solution,
   findFirstUnusedReveal,
   unicodeLength,
-  disassembledWords,
 } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
@@ -34,14 +33,11 @@ import {
   setStoredIsHighContrastMode,
   getStoredIsHighContrastMode,
   loadThemedTitleFromLocalStorage,
-  saveThemedTitleToLocalStorage,
   loadThemedDateFromLocalStorage,
-  saveThemedDateToLocalStorage,
   loadThemedWordsFromLocalStorage,
-  saveThemedWordsToLocalStorage,
 } from './lib/localStorage'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
-import { theme } from './lib/theme'
+import { extractFromWikitext, theme } from './lib/theme'
 
 import './App.css'
 import { AlertContainer } from './components/alerts/AlertContainer'
@@ -105,7 +101,9 @@ function App() {
   const [themedTitle, setThemedTitle] = useState<string>(
     loadThemedTitleFromLocalStorage()
   )
-  const [, setThemedDate] = useState<string>(loadThemedDateFromLocalStorage())
+  const [themedDate, setThemedDate] = useState<string>(
+    loadThemedDateFromLocalStorage()
+  )
   const [themedWords, setThemedWords] = useState<string[]>(
     loadThemedWordsFromLocalStorage()
   )
@@ -140,7 +138,7 @@ function App() {
   useEffect(() => {
     // Fetch theme
 
-    if (theme && themedWords.length === 0) {
+    if (theme && (!themedDate.length || !themedWords.length)) {
       const fetchData = async () => {
         await fetch(
           `https://api.allorigins.win/get?url=${encodeURIComponent(
@@ -156,25 +154,18 @@ function App() {
             if (!contents.length) {
               throw new Error()
             }
-            let m = contents.match(/\|name\s*=\s*([^|}]+)/)
-            if (m && m[1]) {
-              const name = m[1].trim()
+            try {
+              const [name, date, words] = extractFromWikitext(contents)
               setThemedTitle(name)
-              saveThemedTitleToLocalStorage(name)
-            }
-            m = contents.match(/\|date\s*=\s*([^|}]+)/)
-            if (m && m[1]) {
-              const date = m[1].trim()
               setThemedDate(date)
-              saveThemedDateToLocalStorage(date)
-            }
-            m = contents.match(/\|words\s*=\s*([^|}]+)/)
-            if (m && m[1]) {
-              const words = disassembledWords(m[1].trim().split('\n'))
               setThemedWords(words)
-              saveThemedWordsToLocalStorage(words)
+              window.location.reload()
+            } catch (err) {
+              showErrorAlert(`불러오는 데에 실패했습니다.`, {
+                persist: true,
+              })
+              console.log(contents)
             }
-            window.location.reload()
           })
           .catch((_err) => {
             showErrorAlert(`"${theme}" 테마를 찾지 못했습니다`, {
@@ -316,7 +307,10 @@ function App() {
     }
   }
 
-  if (theme && (!themedWords.length || !solution.length)) {
+  if (
+    theme &&
+    (!themedDate.length || !themedWords.length || !solution.length)
+  ) {
     return (
       <div className="h-screen flex justify-center items-center">
         <div className="text-xl">불러오는 중...</div>

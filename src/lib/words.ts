@@ -102,8 +102,9 @@ export const localeAwareUpperCase = (text: string) => {
 }
 
 export const getWordOfDay = () => {
+  const themedDate = loadThemedDateFromLocalStorage()
   const epochMs = new Date(
-    theme ? loadThemedDateFromLocalStorage() : 'March 8, 2022 00:00:00'
+    theme && themedDate !== '' ? themedDate : 'March 8, 2022 00:00:00'
   ).valueOf()
   const now = Date.now()
   const msInDay = 86400000
