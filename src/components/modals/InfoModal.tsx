@@ -75,7 +75,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
 
       <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
         <a
-          href={`https://wordles.miraheze.org/wiki/Form:Ze_Wordle`}
+          href={`https://wordles.miraheze.org/wiki/Special:Login?returnto=Form:Ze_Wordle`}
           className="underline font-bold"
         >
           내가 원하는 주제로 새 Ze-Wordle 만들기
