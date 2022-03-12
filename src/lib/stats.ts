@@ -4,7 +4,6 @@ import {
   loadStatsFromLocalStorage,
   saveStatsToLocalStorage,
 } from './localStorage'
-import { theme } from './theme'
 
 // In stats array elements 0-5 are successes in 1-6 trys
 
@@ -32,7 +31,7 @@ export const addStatsForCompletedGame = (
 
   stats.successRate = getSuccessRate(stats)
 
-  saveStatsToLocalStorage(stats, theme)
+  saveStatsToLocalStorage(stats)
   return stats
 }
 
@@ -46,7 +45,7 @@ const defaultStats: GameStats = {
 }
 
 export const loadStats = () => {
-  return loadStatsFromLocalStorage(theme) || defaultStats
+  return loadStatsFromLocalStorage() || defaultStats
 }
 
 const getSuccessRate = (gameStats: GameStats) => {

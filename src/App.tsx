@@ -33,8 +33,10 @@ import {
   saveGameStateToLocalStorage,
   setStoredIsHighContrastMode,
   getStoredIsHighContrastMode,
-  loadThemedNameFromLocalStorage,
-  saveThemedNameToLocalStorage,
+  loadThemedTitleFromLocalStorage,
+  saveThemedTitleToLocalStorage,
+  loadThemedDateFromLocalStorage,
+  saveThemedDateToLocalStorage,
   loadThemedWordsFromLocalStorage,
   saveThemedWordsToLocalStorage,
 } from './lib/localStorage'
@@ -75,17 +77,17 @@ function App() {
   )
   const [isRevealing, setIsRevealing] = useState(false)
   const [guesses, setGuesses] = useState<string[]>(() => {
-    const loaded = loadGameStateFromLocalStorage(theme)
+    const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution !== solution) {
       return []
     }
-    const gameWasWon = loaded.guesses.includes(solution)
+    const gameWasWon = solution && loaded.guesses.includes(solution)
     if (gameWasWon) {
       setIsGameWon(true)
     }
     if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
       setIsGameLost(true)
-      showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
+      showErrorAlert(CORRECT_WORD_MESSAGE(solution || ''), {
         persist: true,
       })
     }
@@ -100,11 +102,14 @@ function App() {
       : false
   )
 
-  const [themedName, setThemedName] = useState<string>(
-    loadThemedNameFromLocalStorage(theme)
+  const [themedTitle, setThemedTitle] = useState<string>(
+    loadThemedTitleFromLocalStorage()
+  )
+  const [_themedDate, setThemedDate] = useState<string>(
+    loadThemedDateFromLocalStorage()
   )
   const [themedWords, setThemedWords] = useState<string[]>(
-    loadThemedWordsFromLocalStorage(theme)
+    loadThemedWordsFromLocalStorage()
   )
   const MAX_WORD_LENGTH = theme
     ? Math.max(...themedWords.map((w) => w.length))
@@ -113,7 +118,7 @@ function App() {
   useEffect(() => {
     // if no game state on load,
     // show the user the how-to info modal
-    if (!loadGameStateFromLocalStorage(theme)) {
+    if (!loadGameStateFromLocalStorage()) {
       setTimeout(() => {
         setIsInfoModalOpen(true)
       }, WELCOME_INFO_MODAL_MS)
@@ -156,15 +161,22 @@ function App() {
             let m = contents.match(/\|name\s*=\s*([^|}]+)/)
             if (m && m[1]) {
               const name = m[1].trim()
-              setThemedName(name)
-              saveThemedNameToLocalStorage(name, theme)
+              setThemedTitle(name)
+              saveThemedTitleToLocalStorage(name)
+            }
+            m = contents.match(/\|date\s*=\s*([^|}]+)/)
+            if (m && m[1]) {
+              const date = m[1].trim()
+              setThemedDate(date)
+              saveThemedDateToLocalStorage(date)
             }
             m = contents.match(/\|words\s*=\s*([^|}]+)/)
             if (m && m[1]) {
               const words = disassembledWords(m[1].trim().split('\n'))
               setThemedWords(words)
-              saveThemedWordsToLocalStorage(words, theme)
+              saveThemedWordsToLocalStorage(words)
             }
+            window.location.reload()
           })
           .catch((_err) => {
             showErrorAlert(`"${theme}" 테마를 찾지 못했습니다`, {
@@ -201,7 +213,9 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution }, theme)
+    if (solution.length) {
+      saveGameStateToLocalStorage({ guesses, solution })
+    }
   }, [guesses])
 
   useEffect(() => {
@@ -304,7 +318,7 @@ function App() {
     }
   }
 
-  if (theme && themedWords.length === 0) {
+  if (theme && (!themedWords.length || !solution.length)) {
     return (
       <div className="h-screen flex justify-center items-center">
         <div className="text-xl">불러오는 중...</div>
@@ -319,7 +333,7 @@ function App() {
         setIsInfoModalOpen={setIsInfoModalOpen}
         setIsStatsModalOpen={setIsStatsModalOpen}
         setIsSettingsModalOpen={setIsSettingsModalOpen}
-        themedName={themedName}
+        themedTitle={themedTitle}
       />
       <div className="pt-2 px-1 pb-8 md:max-w-4xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow">
         <div className="pb-6 grow">

@@ -9,14 +9,14 @@ type Props = {
   setIsInfoModalOpen: (value: boolean) => void
   setIsStatsModalOpen: (value: boolean) => void
   setIsSettingsModalOpen: (value: boolean) => void
-  themedName: string
+  themedTitle: string
 }
 
 export const Navbar = ({
   setIsInfoModalOpen,
   setIsStatsModalOpen,
   setIsSettingsModalOpen,
-  themedName,
+  themedTitle,
 }: Props) => {
   return (
     <div className="navbar">
@@ -26,7 +26,7 @@ export const Navbar = ({
           onClick={() => setIsInfoModalOpen(true)}
         />
         <p className="text-xl ml-2.5 font-bold dark:text-white">
-          {themedName ? themedName : GAME_TITLE}
+          {themedTitle ? themedTitle : GAME_TITLE}
         </p>
         <div className="right-icons">
           <ChartBarIcon
