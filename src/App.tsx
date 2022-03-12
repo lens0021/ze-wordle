@@ -105,9 +105,7 @@ function App() {
   const [themedTitle, setThemedTitle] = useState<string>(
     loadThemedTitleFromLocalStorage()
   )
-  const [_themedDate, setThemedDate] = useState<string>(
-    loadThemedDateFromLocalStorage()
-  )
+  const [, setThemedDate] = useState<string>(loadThemedDateFromLocalStorage())
   const [themedWords, setThemedWords] = useState<string[]>(
     loadThemedWordsFromLocalStorage()
   )
@@ -146,7 +144,7 @@ function App() {
       const fetchData = async () => {
         await fetch(
           `https://api.allorigins.win/get?url=${encodeURIComponent(
-            `https://wordles.miraheze.org/wiki/https://ze-wordle.pages.dev/${theme}/data?action=raw`
+            `https://wordles.miraheze.org/wiki/https://ze-wordle.pages.dev/${theme}?action=raw`
           )}`
         )
           .then((res) => {
