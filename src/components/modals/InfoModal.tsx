@@ -69,14 +69,15 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell value="L" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        ㅔ는 ㅓㅣ, ㅖ는 ㅕㅣ와 같이 풀어쓰며 글자수가 일치하지 않아도 제출
-        가능합니다.
+        ㅔ는 ㅓㅣ, ㅖ는 ㅕㅣ와 같이 풀어쓰며 글자수는 가장 긴 경우보다만 짧으면
+        제출 가능합니다.
       </p>
 
       <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
         <a
+          type="button"
           href={`https://wordles.miraheze.org/wiki/Special:Login?returnto=Form:Ze_Wordle`}
-          className="underline font-bold"
+          className="mt-2 w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
         >
           내가 원하는 주제로 새 Ze-Wordle 만들기
         </a>
