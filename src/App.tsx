@@ -176,7 +176,7 @@ function App() {
 
       fetchData()
     } else if (theme) {
-      document.title = `${themedTitle} - 제 워들`
+      document.title = themedTitle + ' - ' + process.env.REACT_APP_GAME_NAME
     }
   })
 
