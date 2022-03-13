@@ -96,7 +96,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
       </p>
       */}
 
-      <p className="mt-6 italic text-sm text-gray-500 dark:text-gray-300">
+      <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
         이 게임은 Wordle의{' '}
         <a href="https://reactle.vercel.app/" className="underline font-bold">
           모사작
@@ -119,10 +119,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <a href="https://wordles.miraheze.org/" className="underline font-bold">
           워들 허브
         </a>
-        에서 더 많은 한국어 워들을 찾을 수 있습니다
-      </p>
-
-      <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
+        에서 더 많은 한국어 워들을 찾을 수 있습니다 -{' '}
         <a
           href={`https://meta.miraheze.org/wiki/Special:MyLanguage/Donate`}
           className="underline font-bold"
