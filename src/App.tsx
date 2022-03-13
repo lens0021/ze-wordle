@@ -175,6 +175,8 @@ function App() {
       }
 
       fetchData()
+    } else if (theme) {
+      document.title = `${themedTitle} - 제 워들`
     }
   })
 
