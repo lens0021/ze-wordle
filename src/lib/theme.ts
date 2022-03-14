@@ -18,7 +18,7 @@ const getTheme = () => {
 export const extractFromWikitext = (wt: string): [string, string, string[]] => {
   let name, date, words, m
 
-  m = wt.match(/\{\{Ze Wordle\s*\|(.+)\s*\}\}/s)
+  m = wt.match(/\{\{Ze Wordle\s*(.+)\s*\}\}/s)
   if (!m || !m[1]) {
     throw new Error()
   }
@@ -39,6 +39,7 @@ export const extractFromWikitext = (wt: string): [string, string, string[]] => {
     saveThemedWordsToLocalStorage(words)
   }
   if (name === undefined || date === undefined || words === undefined) {
+    console.log(name, date, words)
     throw new Error()
   }
   return [name, date, words]
