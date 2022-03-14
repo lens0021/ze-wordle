@@ -3,6 +3,12 @@ import { solutionIndex, unicodeSplit } from './words'
 import { GAME_TITLE } from '../constants/strings'
 import { MAX_CHALLENGES } from '../constants/settings'
 import { loadThemedTitleFromLocalStorage } from './localStorage'
+import { UAParser } from 'ua-parser-js'
+
+const webShareApiDeviceTypes: string[] = ['mobile', 'smarttv', 'wearable']
+const parser = new UAParser()
+const browser = parser.getBrowser()
+const device = parser.getDevice()
 
 export const shareStatus = (
   guesses: string[],
