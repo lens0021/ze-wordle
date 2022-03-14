@@ -16,7 +16,7 @@ import {
   // MAX_WORD_LENGTH,
   MAX_CHALLENGES,
   REVEAL_TIME_MS,
-  GAME_LOST_INFO_DELAY,
+  // GAME_LOST_INFO_DELAY,
   WELCOME_INFO_MODAL_MS,
 } from './constants/settings'
 import {
@@ -224,7 +224,7 @@ function App() {
     if (isGameLost) {
       setTimeout(() => {
         setIsStatsModalOpen(true)
-      }, GAME_LOST_INFO_DELAY)
+      }, (solution.length + 1) * REVEAL_TIME_MS)
     }
   }, [isGameWon, isGameLost, showSuccessAlert, MAX_WORD_LENGTH])
 
@@ -358,10 +358,11 @@ function App() {
           gameStats={stats}
           isGameLost={isGameLost}
           isGameWon={isGameWon}
-          handleShare={() => showSuccessAlert(GAME_COPIED_MESSAGE)}
+          handleShareToClipboard={() => showSuccessAlert(GAME_COPIED_MESSAGE)}
           isHardMode={isHardMode}
           isDarkMode={isDarkMode}
           isHighContrastMode={isHighContrastMode}
+          numberOfGuessesMade={guesses.length}
         />
         <SettingsModal
           isOpen={isSettingsModalOpen}
