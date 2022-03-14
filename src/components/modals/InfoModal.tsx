@@ -69,8 +69,8 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell value="L" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        ㅖ는 ㅕㅣ와 같이 풀어쓰며 글자수는 가장 긴 경우보다만 짧으면
-        제출 가능합니다.
+        ㅖ는 ㅕㅣ와 같이 풀어쓰며 글자수는 가장 긴 경우보다만 짧으면 제출
+        가능합니다.
       </p>
 
       <p className="mt-6 text-sm text-gray-500 dark:text-gray-300">
