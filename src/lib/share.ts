@@ -1,5 +1,5 @@
 import { getGuessStatuses } from './statuses'
-import { solutionIndex } from './words'
+import { solutionIndex, unicodeSplit } from './words'
 import { GAME_TITLE } from '../constants/strings'
 import { MAX_CHALLENGES } from '../constants/settings'
 import { loadThemedTitleFromLocalStorage } from './localStorage'
@@ -9,23 +9,42 @@ export const shareStatus = (
   lost: boolean,
   isHardMode: boolean,
   isDarkMode: boolean,
-  isHighContrastMode: boolean
+  isHighContrastMode: boolean,
+  handleShareToClipboard: () => void
 ) => {
   const gameTitle = loadThemedTitleFromLocalStorage() || GAME_TITLE
-  navigator.clipboard.writeText(
+  const textToShare =
     `${gameTitle} ${solutionIndex} ${
       lost ? 'X' : guesses.length
-    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''} ${window.location.href} \n\n` +
-      generateEmojiGrid(guesses, getEmojiTiles(isDarkMode, isHighContrastMode))
-  )
+    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''} ${window.location.href}\n\n` +
+    generateEmojiGrid(guesses, getEmojiTiles(isDarkMode, isHighContrastMode))
+
+  const shareData = { text: textToShare }
+
+  let shareSuccess = false
+
+  try {
+    if (attemptShare(shareData)) {
+      navigator.share(shareData)
+      shareSuccess = true
+    }
+  } catch (error) {
+    shareSuccess = false
+  }
+
+  if (!shareSuccess) {
+    navigator.clipboard.writeText(textToShare)
+    handleShareToClipboard()
+  }
 }
 
 export const generateEmojiGrid = (guesses: string[], tiles: string[]) => {
   return guesses
     .map((guess) => {
       const status = getGuessStatuses(guess)
-      return guess
-        .split('')
+      const splitGuess = unicodeSplit(guess)
+
+      return splitGuess
         .map((_, i) => {
           switch (status[i]) {
             case 'correct':
@@ -39,6 +58,17 @@ export const generateEmojiGrid = (guesses: string[], tiles: string[]) => {
         .join('')
     })
     .join('\n')
+}
+
+const attemptShare = (shareData: object) => {
+  return (
+    // Deliberately exclude Firefox Mobile, because its Web Share API isn't working correctly
+    browser.name?.toUpperCase().indexOf('FIREFOX') === -1 &&
+    webShareApiDeviceTypes.indexOf(device.type ?? '') !== -1 &&
+    navigator.canShare &&
+    navigator.canShare(shareData) &&
+    navigator.share
+  )
 }
 
 const getEmojiTiles = (isDarkMode: boolean, isHighContrastMode: boolean) => {

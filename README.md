@@ -22,8 +22,8 @@ $> npm run start
 #### Development
 
 ```bash
-$> docker build -t game:dev .
-$> docker run -d -p 3000:3000 game:dev
+$> docker build -t reactle:dev -f docker/Dockerfile .
+$> docker run -d -p 3000:3000 --name reactle-dev reactle:dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in browser.
@@ -31,8 +31,8 @@ Open [http://localhost:3000](http://localhost:3000) in browser.
 #### Production
 
 ```bash
-$> docker build --target=prod -t game:prod .
-$> docker run -d -p 80:80 game:prod
+$> docker build --target=prod -t reactle:prod -f docker/Dockerfile .
+$> docker run -d -p 80:8080  --name reactle-prod reactle:prod
 ```
 
 Open [http://localhost](http://localhost) in browser.
@@ -111,6 +111,7 @@ Open [http://localhost](http://localhost) in browser.
 ### Math, Acronyms, Science, Tech, and more
 
 - [AI-powered](https://github.com/asirota/wordle-ai): Includes an AI component
+- [Colordle](https://github.com/necropolina/colordle): Guess the hexadecimal color code of the background
 - [Genel](https://andrewholding.github.io/gene-wordle/): Gene symbols
 - [Jazle](https://jazle.quest/): Javascript
 - [Mathler](https://www.mathler.com/): Find the solution that equals X
@@ -120,10 +121,12 @@ Open [http://localhost](http://localhost) in browser.
 - [Passwordle](https://passwordle.sp8c3.com/): Passwords
 - [Primel](https://converged.yt/primel/): Prime numbers
 - [Qwordle](https://qwordle.bhat.ca/): Quantum version of Wordle (uses entangled word-pairs)
+- [Quantle](https://deduckproject.github.io/quantle/): Another quantum variant where guesses are quantum equations
 - [Rundle](https://furstenheim.github.io/react-wordle/): Like wordle, but only last three guesses are considered.
 - [Stockle](https://stockle.win/): Guess the stock or ETF
 - [Syscordle](https://nezza.github.io/syscordle/): SYSCALL
 - [UNLOCOdle](https://unlocodle.collabital.com/): UNLOCODEs
+- [Visionle](https://orisenbazuru.github.io/visionle/): Guess the label of randomly chosen image from ImageNet/ImageNet-Sketch dataset (Machine learning)
 
 _Want to add one to the list? Just make a pull request or [let us know via a comment here](https://github.com/cwackerfuss/react-wordle/issues/120)_
 
