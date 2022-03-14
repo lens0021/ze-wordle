@@ -16,8 +16,14 @@ const getTheme = () => {
 }
 
 export const extractFromWikitext = (wt: string): [string, string, string[]] => {
-  let name, date, words
-  let m = wt.match(/\|name\s*=\s*([^|}]+)/)
+  let name, date, words, m
+
+  m = wt.match(/\{\{Ze Wordle\s*\|(.+)\s*\}\}/s)
+  if (!m || !m[1]) {
+    throw new Error()
+  }
+  wt = m[1]
+  m = wt.match(/\|name\s*=\s*([^|}]+)/)
   if (m && m[1]) {
     name = m[1].trim()
     saveThemedTitleToLocalStorage(name)
